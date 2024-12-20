@@ -85,6 +85,10 @@ function setup() {
   variables()
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth * 0.8, windowHeight * 0.8);
+}
+
 // monkey function
 function drawMonkey(monXLoc, monYLoc, monSize, headXLoc) {
   strokeWeight(monSize * 0.12)
