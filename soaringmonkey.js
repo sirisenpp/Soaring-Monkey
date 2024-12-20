@@ -79,7 +79,7 @@ function variables() {
 }
 
 function setup() {
-  createCanvas(windowWidth * 0.8, windowHeight * 0.8)
+  createCanvas(600, 800)
   frameRate(60)
   state = 'start'
   variables()
