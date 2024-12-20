@@ -49,20 +49,20 @@ function variables() {
   monYLoc = 350
   monSize = 45
   // canoe variables
-  canXLoc = 300
-  canYLoc = 0
+  canXLoc = random(200, 390)
+  canYLoc = -200
   canSpeed = gameSpeed * 0.8
   // island variables
-  islXLoc = 100
+  islXLoc = random(10, 200)
   islYLoc = 0
-  islSize = 10
+  islSize = random(5, 11)
   islSpeed = gameSpeed * 0.8
   // cloud 1 variables
-  cloudXLoc = 200
+  cloudXLoc = random(10, 390)
   cloudYLoc = 0
   cloudSpeed = gameSpeed * 0.8
   // cloud 2 variables
-  cloudXLocTwo = 400
+  cloudXLocTwo = random(10, 390)
   cloudYLocTwo = 0
   cloudSpeedTwo = gameSpeed * 0.6
   // missile variables
@@ -75,19 +75,19 @@ function variables() {
   // general obstacle variables
   obsYLoc = -100
   obsSpeed = gameSpeed * 0.7
-  obsType = 100
+  obsType = bsType = Math.floor(Math.random() * 6)
 }
 
 function setup() {
-  createCanvas(windowWidth * 0.8, windowHeight * 0.8) // browser size based
+  createCanvas(400, 700) // browser size based
   frameRate(60)
   state = 'start'
   variables()
 }
 
-function windowResized() {
+/*function windowResized() {
   resizeCanvas(windowWidth * 0.8, windowHeight * 0.8); // dynamic resizing
-}
+}*/
 
 // monkey function
 function drawMonkey(monXLoc, monYLoc, monSize, headXLoc) {
@@ -115,8 +115,8 @@ function drawCanoe(canXLoc, canYLoc, canSpeed) {
   strokeWeight(5)
   stroke(102, 51, 0)
   fill(153, 76, 0)
-  bezier(canXLoc, canYLoc + 30, canXLoc + 10, canYLoc, canXLoc + 5, canYLoc - 5, canXLoc, canYLoc - 30)
-  bezier(canXLoc, canYLoc + 30, canXLoc - 10, canYLoc, canXLoc - 5, canYLoc - 5, canXLoc, canYLoc - 30)
+  bezier(canXLoc - 0.5, canYLoc + 30, canXLoc + 10, canYLoc, canXLoc + 5, canYLoc - 5, canXLoc - 0.5, canYLoc - 30)
+  bezier(canXLoc + 0.5, canYLoc + 30, canXLoc - 10, canYLoc, canXLoc - 5, canYLoc - 5, canXLoc + 0.5, canYLoc - 30)
 }
 
 // island function 
@@ -142,7 +142,7 @@ function drawCloud(cloudXLoc, cloudYLoc, cloudSpeed) {
 // cloud 2 function
 function drawCloudTwo(cloudXLocTwo, cloudYLocTwo, cloudSpeedTwo) {
   strokeWeight(0)
-  fill(230, 230, 240)
+  fill(220, 220, 230)
   ellipse(cloudXLocTwo, cloudYLocTwo, 100, 100)
   ellipse(cloudXLocTwo + 50, cloudYLocTwo + 10, 80, 80)
   ellipse(cloudXLocTwo - 50, cloudYLocTwo + 20, 60, 60)
@@ -198,7 +198,7 @@ function generateObs() {
   if (obsType == 100) {
     obsYLoc = obsYLoc + obsSpeed
     drawWings(obsYLoc)
-    if (obsYLoc > 600) {
+    if (obsYLoc > 700) {
       obsYLoc = -100
       obsGen()
     }
@@ -207,7 +207,7 @@ function generateObs() {
   else if (obsType == 0) {
     obsYLoc = obsYLoc + obsSpeed
     drawWings(obsYLoc)
-    if (obsYLoc > 600) {
+    if (obsYLoc > 700) {
       obsYLoc = -100
       obsGen()
     }
@@ -216,7 +216,7 @@ function generateObs() {
   else if (obsType == 1) {
     obsYLoc = obsYLoc + obsSpeed
     drawMissile(missileM, obsYLoc)
-    if (obsYLoc > 630) {
+    if (obsYLoc > 730) {
       obsYLoc = -100
       obsGen()
     }
@@ -225,7 +225,7 @@ function generateObs() {
   else if (obsType == 2) {
     obsYLoc = obsYLoc + obsSpeed
     drawMissile(missileL, obsYLoc)
-    if (obsYLoc > 630) {
+    if (obsYLoc > 730) {
       obsYLoc = -100
       obsGen()
     }
@@ -234,7 +234,7 @@ function generateObs() {
   else if (obsType == 3) {
     obsYLoc = obsYLoc + obsSpeed
     drawMissile(missileR, obsYLoc)
-    if (obsYLoc > 630) {
+    if (obsYLoc > 730) {
       obsYLoc = -100
       obsGen()
     }
@@ -243,7 +243,7 @@ function generateObs() {
   else if (obsType == 4) {
     obsYLoc = obsYLoc + obsSpeed
     drawSat(satL, obsYLoc)
-    if (obsYLoc > 630) {
+    if (obsYLoc > 730) {
       obsYLoc = -100
       obsGen()
     }
@@ -252,7 +252,7 @@ function generateObs() {
   else if (obsType == 5) {
     obsYLoc = obsYLoc + obsSpeed
     drawSat(satR, obsYLoc)
-    if (obsYLoc > 630) {
+    if (obsYLoc > 730) {
       obsYLoc = -100
       obsGen()
     }
@@ -265,7 +265,7 @@ function mouseClicked() {
   if (state == 'start') {
     if (mouseX < 290 && mouseX > 110 && mouseY < 340 && mouseY > 260) {
       state = 'play'
-      variables()
+      //variables()
     }
   }
   // if in gameover
@@ -291,36 +291,37 @@ function draw() {
   cloudSpeedTwo = gameSpeed * 0.6
   obsSpeed = gameSpeed * 0.7
 
+  // decorations
+  islYLoc = islYLoc + islSpeed // island 
+  if (islYLoc > 1500) {
+    islYLoc = -100
+    islXLoc = random(0, 400)
+    islSize = random(5, 11)
+  }
+  drawIsland(islXLoc, islYLoc, islSize, islSpeed)
+  canYLoc = canYLoc + canSpeed // canoe 
+  if (canYLoc > 1500) {
+    canYLoc = -100
+    canXLoc = random(0, 400)
+  }
+  drawCanoe(canXLoc, canYLoc, canSpeed)
+  // clouds 
+  cloudYLoc = cloudYLoc + cloudSpeed // cloud 1
+  if (cloudYLoc > 800) {
+    cloudYLoc = -100
+    cloudXLoc = random(10, 390)
+  }
+  drawCloud(cloudXLoc, cloudYLoc, cloudSpeed)
+  cloudYLocTwo = cloudYLocTwo + cloudSpeedTwo // cloud 2
+  if (cloudYLocTwo > 800) {
+    cloudYLocTwo = -100
+    cloudXLocTwo = random(10, 390)
+  }
+  drawCloudTwo(cloudXLocTwo, cloudYLocTwo, cloudSpeedTwo)
+
   // start menu 
   if (state == 'start') {
     gameSpeed = 10
-    // decorations
-    islYLoc = islYLoc + islSpeed // island 
-    if (islYLoc > 1500) {
-      islYLoc = -100
-      islXLoc = random(0, 400)
-      islSize = random(5, 11)
-    }
-    drawIsland(islXLoc, islYLoc, islSize, islSpeed)
-    canYLoc = canYLoc + canSpeed // canoe 
-    if (canYLoc > 1500) {
-      canYLoc = -100
-      canXLoc = random(0, 400)
-    }
-    drawCanoe(canXLoc, canYLoc, canSpeed)
-    // clouds 
-    cloudYLoc = cloudYLoc + cloudSpeed // cloud 1
-    if (cloudYLoc > 700) {
-      cloudYLoc = -100
-      cloudXLoc = random(400)
-    }
-    drawCloud(cloudXLoc, cloudYLoc, cloudSpeed)
-    cloudYLocTwo = cloudYLocTwo + cloudSpeedTwo // cloud 2
-    if (cloudYLocTwo > 800) {
-      cloudYLocTwo = -100
-      cloudXLocTwo = random(400)
-    }
-    drawCloudTwo(cloudXLocTwo, cloudYLocTwo, cloudSpeedTwo)
     // start button  
     strokeWeight(10)
     stroke(0, 26, 77)
@@ -361,34 +362,6 @@ function draw() {
     text('SOARING', 200, 120)
   }
   else if (state == 'play') {
-    background(1, 120, 189)
-    // decorations
-    islYLoc = islYLoc + islSpeed // island 
-    if (islYLoc > 1000) {
-      islYLoc = -100
-      islXLoc = random(0, 400)
-      islSize = random(5, 11)
-    }
-    drawIsland(islXLoc, islYLoc, islSize, islSpeed)
-    canYLoc = canYLoc + canSpeed // canoe 
-    if (canYLoc > 1500) {
-      canYLoc = -100
-      canXLoc = random(0, 400)
-    }
-    drawCanoe(canXLoc, canYLoc, canSpeed)
-    // clouds 
-    cloudYLoc = cloudYLoc + cloudSpeed // cloud 1
-    if (cloudYLoc > 700) {
-      cloudYLoc = -100
-      cloudXLoc = random(400)
-    }
-    drawCloud(cloudXLoc, cloudYLoc, cloudSpeed)
-    cloudYLocTwo = cloudYLocTwo + cloudSpeedTwo // cloud 2
-    if (cloudYLocTwo > 800) {
-      cloudYLocTwo = -100
-      cloudXLocTwo = random(400)
-    }
-    drawCloudTwo(cloudXLocTwo, cloudYLocTwo, cloudSpeedTwo)
     // monkey
     drawMonkey(monXLoc, monYLoc, monSize)
     // movements
@@ -458,7 +431,7 @@ function draw() {
       }
     }
     // score
-    if (frames % 60 == 0) {
+    if (frames % 3 == 0) {
       score += 1
     }
     strokeWeight(10)
@@ -472,33 +445,6 @@ function draw() {
     }
   }
   else if (state == 'gameover') {
-    // decorations
-    islYLoc = islYLoc + islSpeed // island 
-    if (islYLoc > 1000) {
-      islYLoc = -100
-      islXLoc = random(0, 400)
-      islSize = random(5, 11)
-    }
-    drawIsland(islXLoc, islYLoc, islSize, islSpeed)
-    canYLoc = canYLoc + canSpeed // canoe 
-    if (canYLoc > 1500) {
-      canYLoc = -100
-      canXLoc = random(0, 400)
-    }
-    drawCanoe(canXLoc, canYLoc, canSpeed)
-    // clouds 
-    cloudYLoc = cloudYLoc + cloudSpeed // cloud 1
-    if (cloudYLoc > 700) {
-      cloudYLoc = -100
-      cloudXLoc = random(400)
-    }
-    drawCloud(cloudXLoc, cloudYLoc, cloudSpeed)
-    cloudYLocTwo = cloudYLocTwo + cloudSpeedTwo // cloud 2
-    if (cloudYLocTwo > 800) {
-      cloudYLocTwo = -100
-      cloudXLocTwo = random(400)
-    }
-    drawCloudTwo(cloudXLocTwo, cloudYLocTwo, cloudSpeedTwo)
     // monkey
     monSize = monSize - 1
     drawMonkey(monXLoc, monYLoc, monSize)
@@ -553,4 +499,5 @@ function draw() {
     textSize(30)
     text('SCORE: ' + score, 200, 250)
   }
+  frames += 1
 }
