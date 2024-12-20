@@ -79,7 +79,7 @@ function variables() {
 }
 
 function setup() {
-  createCanvas(400, 600)
+  createCanvas(1600, 2400)
   frameRate(60)
   state = 'start'
   variables()
