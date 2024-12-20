@@ -79,14 +79,14 @@ function variables() {
 }
 
 function setup() {
-  createCanvas(windowWidth * 0.8, windowHeight * 0.8)
+  createCanvas(windowWidth * 0.8, windowHeight * 0.8) // browser size based
   frameRate(60)
   state = 'start'
   variables()
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth * 0.8, windowHeight * 0.8);
+  resizeCanvas(windowWidth * 0.8, windowHeight * 0.8); // dynamic resizing
 }
 
 // monkey function
