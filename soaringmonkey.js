@@ -10,6 +10,7 @@ let score
 let monXLoc
 let monYLoc
 let monSize
+let monMove
 // canoe variables
 let canXLoc
 let canYLoc
@@ -281,6 +282,36 @@ function mouseClicked() {
   }
 }
 
+// mouse pressed
+function mousePressed() {
+  if (state == 'play') {
+    if (mouseY > monYLoc - 100 && mouseY < monYLoc + 100) {
+      monMove = true
+    }
+    else {
+      monMove = false
+    }
+  }
+}
+
+// mouse released
+function mouseReleased() {
+  monMove = false
+}
+
+// mouse dragged
+function mouseDragged() {
+  if (state == 'play' && monMove) {
+    monXLoc = mouseX
+    if (monXLoc < 65) {
+      monXLoc = 65
+    }
+    if (monXLoc > 335) {
+      monXLoc = 335
+    }
+  }
+}
+
 function draw() {
   background(1, 120, 189);
   rectMode(CENTER)
@@ -332,18 +363,19 @@ function draw() {
     textStyle(BOLD)
     noStroke()
     fill(255)
-    text('START', 200, 315)
+    text('START!', 200, 315)
     // controls
     stroke(150, 0, 0)
     fill(230, 0, 0)
-    rect(200, 436, 340, 130, 15)
+    rect(200, 446, 360, 150, 15)
     textSize(20)
     noStroke()
     fill(255)
-    text('CONTROLS: USE THE A AND D', 200, 405)
-    text('OR ARROW KEYS TO HELP THE', 200, 430)
-    text('MONKEY DODGE OBSTACTLES', 200, 455)
-    text(' AND SOAR TROUGH THE SKIES!', 200, 480)
+    text('CONTROLS: USE THE A & D,', 200, 405)
+    text('ARROW KEYS, OR TOUCHSCREEN', 200, 430)
+    text('TO HELP THE MONKEY', 200, 455)
+    text('DODGE OBSTACLES AND', 200, 480)
+    text('SOAR TROUGH THE SKIES!', 200, 505)
     // logo
     strokeWeight(12)
     textSize(50)
@@ -441,7 +473,7 @@ function draw() {
     text(score, 200, 50)
     // increase speed
     if (score % 500 === 0) {
-      gameSpeed = gameSpeed + 2
+      gameSpeed = gameSpeed + 1
     }
   }
   else if (state == 'gameover') {
