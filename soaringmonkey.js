@@ -285,7 +285,7 @@ function mouseClicked() {
 // mouse pressed
 function mousePressed() {
   if (state == 'play') {
-    if (mouseY > monYLoc - 100 && mouseY < monYLoc + 100) {
+    if (mouseX > monXLoc - 100 && mouseX < monXLoc + 100 && mouseY > monYLoc - 100 && mouseY < monYLoc + 100) {
       monMove = true
     }
     else {
@@ -473,7 +473,7 @@ function draw() {
     text(score, 200, 50)
     // increase speed
     if (score % 500 === 0) {
-      gameSpeed = gameSpeed + 1
+      gameSpeed = gameSpeed + 1.25
     }
   }
   else if (state == 'gameover') {
